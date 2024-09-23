@@ -19,6 +19,8 @@ const config: Config = {
       white: '#FFFFFF',
       principal: '#00875F',
       light: '#00B37E',
+      begin: '#1EA483',
+      end: '#7465D4',
     },
   },
   plugins: [],
