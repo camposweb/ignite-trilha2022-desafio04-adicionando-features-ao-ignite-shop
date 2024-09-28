@@ -4,7 +4,7 @@ import { Cart } from '../Cart'
 
 export function Header() {
   return (
-    <header className="flex items-center justify-between p-8">
+    <header className="flex items-center justify-between py-10">
       <div>
         <Link href={'/'}>
           <Image src={'/logo.svg'} alt="img" width={129.74} height={52} />

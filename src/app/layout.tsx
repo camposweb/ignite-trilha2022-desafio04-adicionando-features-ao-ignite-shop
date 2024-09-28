@@ -9,7 +9,10 @@ const roboto = Roboto({
 })
 
 export const metadata: Metadata = {
-  title: 'IgniteShop 2.0',
+  title: {
+    template: '%s | IgniteShop 2.0',
+    default: 'IgniteShop 2.0',
+  },
   description: 'IgniteShop 2.0',
 }
 
@@ -20,7 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR">
-      <body className={`${roboto.variable} antialiased bg-background`}>
+      <body className={`${roboto.variable} bg-background antialiased`}>
         {children}
       </body>
     </html>
