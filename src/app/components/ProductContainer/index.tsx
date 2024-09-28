@@ -11,13 +11,21 @@ interface ProductContainerProps {
 export function ProductContainer({ children }: ProductContainerProps) {
   const [sliderRef] = useKeenSlider<HTMLDivElement>({
     slides: {
-      perView: 3,
+      perView: 2,
       spacing: 48,
+    },
+    breakpoints: {
+      '(max-width: 768px)': {
+        slides: {
+          perView: 1,
+          spacing: 24,
+        },
+      },
     },
   })
 
   return (
-    <div ref={sliderRef} className="keen-slider">
+    <div ref={sliderRef} className="keen-slider pl-11">
       {children}
     </div>
   )

@@ -7,7 +7,7 @@ interface ShopLayoutProps {
 
 export default function ShopLayout({ children }: ShopLayoutProps) {
   return (
-    <div className="flex flex-col pb-32 lg:px-8 2xl:px-36">
+    <div className="mx-auto mb-32 w-full max-w-[1440px]">
       <Header />
       {children}
     </div>

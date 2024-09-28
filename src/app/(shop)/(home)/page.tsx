@@ -26,41 +26,11 @@ export default async function Home() {
   const products = await getProducts()
 
   return (
-    <main className="flex">
-      <ProductContainer>
-        {products.map((product) => {
-          return (
-            <Link href={`/product/${product.id}`} key={product.id}>
-              <div className="keen-slider__slide group relative flex h-[656px] min-w-[696px] cursor-pointer items-center justify-center overflow-hidden bg-gradient-to-t from-begin to-end">
-                <Image
-                  src={product.imageUrl}
-                  alt=""
-                  width={401}
-                  height={401}
-                  className="object-cover"
-                />
-                <footer className="absolute bottom-1 left-1 right-1 flex translate-y-[110%] items-center justify-between rounded-md bg-elements p-2 opacity-90 transition duration-200 ease-in-out group-hover:translate-y-0">
-                  <div className="flex flex-col">
-                    <strong className="font-roboto text-xl font-bold text-title">
-                      {product.name}
-                    </strong>
-                    <span className="font-roboto text-2xl font-bold text-light">
-                      {product.price}
-                    </span>
-                  </div>
-                  <div className="rounded-md bg-principal p-3">
-                    <Handbag width={32} height={32} className="text-white" />
-                  </div>
-                </footer>
-              </div>
-            </Link>
-          )
-        })}
-      </ProductContainer>
-      {/* {products.map((product) => {
+    <ProductContainer>
+      {products.map((product) => {
         return (
           <Link href={`/product/${product.id}`} key={product.id}>
-            <div className="keen-slider__slide group relative flex h-[656px] w-[696px] cursor-pointer items-center justify-center overflow-hidden bg-gradient-to-t from-begin to-end">
+            <div className="keen-slider__slide group relative flex h-[656px] min-w-[696px] cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-gradient-to-t from-begin to-end">
               <Image
                 src={product.imageUrl}
                 alt=""
@@ -84,7 +54,7 @@ export default async function Home() {
             </div>
           </Link>
         )
-      })} */}
-    </main>
+      })}
+    </ProductContainer>
   )
 }

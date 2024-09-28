@@ -35,8 +35,8 @@ export default async function ProductPage({ params }: ProductProps) {
   const product = await getProduct(params.id)
 
   return (
-    <main className="flex justify-between gap-16">
-      <div className="flex h-[656px] min-w-[576px] items-center justify-center bg-gradient-to-t from-begin to-end">
+    <div className="w-full lg:flex lg:justify-between lg:gap-16 lg:px-11">
+      <div className="flex h-[656px] items-center justify-center bg-gradient-to-t from-begin to-end lg:min-w-[576px]">
         <Image
           src={product.imageUrl}
           alt={product.name}
@@ -55,10 +55,10 @@ export default async function ProductPage({ params }: ProductProps) {
         <p className="pt-10 font-roboto text-lg font-normal text-text">
           {product.description}
         </p>
-        <button className="mt-auto items-center rounded-lg bg-principal py-5 font-roboto text-xl font-bold text-white hover:bg-light">
+        <button className="mt-auto items-center rounded-lg bg-principal p-5 font-roboto text-xl font-bold text-white hover:bg-light">
           Colocar na sacola
         </button>
       </div>
-    </main>
+    </div>
   )
 }
