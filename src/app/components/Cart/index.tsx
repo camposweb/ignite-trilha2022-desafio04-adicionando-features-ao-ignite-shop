@@ -5,12 +5,12 @@ import { ItemCart } from '../ItemCart'
 export function Cart() {
   return (
     <Collapsible.Root>
-      <div className="relative">
+      <div className="relative flex">
         <Collapsible.Trigger asChild className="">
           <button className="items-center rounded-md bg-elements p-2">
             <Handbag className="h-6 w-6 text-icon" />
-            <div className="absolute right-[-10px] top-[-8px] h-6 w-6 items-center rounded-full bg-background">
-              <span className="h-6 w-6 rounded-full bg-principal text-sm font-bold text-white">
+            <div className="absolute flex justify-center border-background -right-3 border-2 overflow-visible top-[-8px] h-6 w-6 items-center rounded-full bg-principal">
+              <span className="text-sm font-bold text-white">
                 1
               </span>
             </div>
@@ -19,7 +19,7 @@ export function Cart() {
       </div>
       <Collapsible.Content
         forceMount
-        className="fixed right-0 top-0 z-20 flex h-screen w-[480px] flex-col bg-elements data-[state=closed]:hidden"
+        className="fixed right-0 top-0 z-20 flex h-screen w-screen transition duration-200 ease-in-out flex-col bg-elements data-[state=closed]:hidden lg:w-[480px] lg:translate-x-0"
       >
         <Collapsible.Trigger asChild>
           <button className="flex justify-end pr-8 pt-8 data-[state=closed]:hidden">
@@ -30,7 +30,10 @@ export function Cart() {
           <h1 className="font-roboto text-xl font-bold text-title">
             Sacola de compras
           </h1>
-          <div className="mt-8 h-44 w-full">
+          <div className="mt-8 h-[400px] md:h-full lg:h-[250px] 2xl:h-[520px] w-full gap-6 flex flex-col overflow-auto">
+            <ItemCart />
+            <ItemCart />
+            <ItemCart />
             <ItemCart />
           </div>
           <footer className="absolute bottom-12 left-12 right-12">
