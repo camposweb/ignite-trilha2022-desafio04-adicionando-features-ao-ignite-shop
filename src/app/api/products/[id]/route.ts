@@ -1,4 +1,5 @@
 import { stripe } from '@/lib/stripe'
+import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import { z } from 'zod'
 
@@ -8,7 +9,7 @@ interface DataParams {
   }
 }
 
-export async function GET(_: Request, { params }: DataParams) {
+export async function GET(req: NextRequest, { params }: DataParams) {
   const id = z.string().parse(params.id)
 
   const product = stripe.products.retrieve(id, {
@@ -17,7 +18,7 @@ export async function GET(_: Request, { params }: DataParams) {
 
   const price = (await product).default_price as Stripe.Price
 
-  return Response.json({
+  return NextResponse.json({
     id: (await product).id,
     name: (await product).name,
     imageUrl: (await product).images[0],

@@ -1,4 +1,5 @@
 import { stripe } from '@/lib/stripe'
+import { NextResponse } from 'next/server'
 import Stripe from 'stripe'
 
 export async function GET() {
@@ -20,5 +21,5 @@ export async function GET() {
     }
   })
 
-  return Response.json(products)
+  return NextResponse.json(products)
 }
