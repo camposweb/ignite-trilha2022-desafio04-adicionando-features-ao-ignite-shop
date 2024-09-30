@@ -2,12 +2,59 @@ import { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ItemPurchase } from '../components/ItemPurchase'
+import { stripe } from '@/lib/stripe'
+import Stripe from 'stripe'
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+async function getSession({ query }: any) {
+  if (!query.session_id) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    }
+  }
+
+  const sessionId = String(query.session_id)
+
+  const session = await stripe.checkout.sessions.retrieve(sessionId, {
+    expand: ['line_items', 'line_items.data.price.product'],
+  })
+
+  const customerName = session.customer_details?.name
+  const product = session.line_items?.data[0].price?.product as Stripe.Product
+
+  return {
+    props: {
+      customerName,
+      product: {
+        name: product.name,
+        imageUrl: product.images[0],
+      },
+    },
+  }
+}
 
 export const metadata: Metadata = {
   title: 'Purchase',
 }
 
-export default async function Purchase() {
+interface PurchaseProps {
+  customerName: string
+  product: {
+    name: string
+    imageUrl: string
+  }
+}
+
+export default async function Purchase({
+  customerName,
+  product,
+}: PurchaseProps) {
+  await getSession(
+    'cs_test_a161KYiEcNj0y2gRz4grDOn7FPWVZtlKEtEJ69z8Oo1kCXNzARFBvbpfIY',
+  )
   return (
     <div className="flex w-full flex-col items-center justify-center px-3 text-center">
       <Image
@@ -19,24 +66,15 @@ export default async function Purchase() {
       />
       <section className="mt-28 flex flex-row [&>div+div]:-ml-12">
         <ItemPurchase>
-          <Image src={'/shirt01.png'} width={130} height={133} alt="" />
-        </ItemPurchase>
-        <ItemPurchase>
-          <Image src={'/shirt01.png'} width={130} height={133} alt="" />
-        </ItemPurchase>
-        <ItemPurchase>
-          <Image src={'/shirt01.png'} width={130} height={133} alt="" />
-        </ItemPurchase>
-        <ItemPurchase>
-          <Image src={'/shirt01.png'} width={130} height={133} alt="" />
+          <Image src={product.imageUrl} width={130} height={133} alt="" />
         </ItemPurchase>
       </section>
       <h1 className="mt-12 font-roboto text-3xl font-bold text-title">
         Compra efetuada!
       </h1>
       <p className="mt-6 font-roboto text-xl font-normal text-title">
-        Uhuul Diego Fernandes, sua compra de 3 camisetas já está a caminho da
-        sua casa.
+        Uhuul {customerName}, sua compra de 1 camiseta já está a caminho da sua
+        casa.
       </p>
       <Link
         href={'/'}

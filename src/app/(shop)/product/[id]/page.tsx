@@ -55,7 +55,10 @@ export default async function ProductPage({ params }: ProductProps) {
         <p className="mb-10 pt-10 font-roboto text-lg font-normal text-text lg:mb-0">
           {product.description}
         </p>
-        <button className="mt-auto items-center rounded-lg bg-principal p-5 font-roboto text-xl font-bold text-white hover:bg-light">
+        <button
+          type="button"
+          className="mt-auto items-center rounded-lg bg-principal p-5 font-roboto text-xl font-bold text-white hover:bg-light"
+        >
           Colocar na sacola
         </button>
       </div>
