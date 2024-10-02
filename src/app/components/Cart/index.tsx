@@ -1,23 +1,58 @@
+'use client'
 import { Handbag, X } from '@phosphor-icons/react/dist/ssr'
 import * as Collapsible from '@radix-ui/react-collapsible'
-import { ItemCart } from '../ItemCart'
+import { useAppSelector } from '@/lib/redux/hooks'
+import Image from 'next/image'
+import { RemoveCartButton } from '../RemoveCartButton'
+import { env } from '@/env'
 
 export function Cart() {
+  const quantityItems = useAppSelector(
+    (state) => state.cartWidget.quantityItems,
+  )
+
+  const cartItems = useAppSelector((state) => state.cartWidget.cartItems)
+
+  const totalPrice = useAppSelector((state) => state.cartWidget.totalPrice)
+
+  async function handleBuyProduct() {
+    try {
+      const response = await fetch(`${env.NEXT_PUBLIC_URL}/api/checkout`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ cartItems }),
+      })
+      const checkoutUrl = response.json()
+      checkoutUrl.then((res) => {
+        window.location.href = res.checkoutUrl
+      })
+    } catch (err) {
+      alert(`Falha ao redirecionar ao checkout \n${err}`)
+    }
+  }
   return (
     <Collapsible.Root>
-      <div className="relative flex">
+      <div className="relative z-20 flex">
         <Collapsible.Trigger asChild className="">
           <button className="items-center rounded-md bg-elements p-2">
             <Handbag className="h-6 w-6 text-icon" />
-            <div className="absolute -right-3 top-[-8px] flex h-6 w-6 items-center justify-center overflow-visible rounded-full border-2 border-background bg-principal">
-              <span className="text-sm font-bold text-white">1</span>
-            </div>
+            {quantityItems < 1 ? (
+              ''
+            ) : (
+              <div className="absolute -right-3 top-[-8px] flex h-6 w-6 items-center justify-center overflow-visible rounded-full border-2 border-background bg-principal">
+                <span className="text-sm font-bold text-white">
+                  {quantityItems}
+                </span>
+              </div>
+            )}
           </button>
         </Collapsible.Trigger>
       </div>
       <Collapsible.Content
         forceMount
-        className="fixed right-0 top-0 z-20 flex h-screen w-screen flex-col bg-elements transition duration-200 ease-in-out data-[state=closed]:hidden lg:w-[480px] lg:translate-x-0"
+        className="fixed right-0 top-0 z-20 flex h-screen w-screen flex-col overflow-auto bg-elements transition duration-200 ease-in-out data-[state=closed]:hidden lg:w-[480px] lg:translate-x-0"
       >
         <Collapsible.Trigger asChild>
           <button className="flex justify-end pr-8 pt-8 data-[state=closed]:hidden">
@@ -29,10 +64,38 @@ export function Cart() {
             Sacola de compras
           </h1>
           <div className="mt-8 flex h-[400px] w-full flex-col gap-6 overflow-auto md:h-full lg:h-[250px] 2xl:h-[520px]">
-            <ItemCart />
-            <ItemCart />
-            <ItemCart />
-            <ItemCart />
+            {cartItems?.map((item) => {
+              return (
+                <>
+                  <div className="flex gap-5">
+                    <div
+                      key={item.id}
+                      className="flex h-28 min-w-28 items-center justify-center rounded-lg bg-gradient-to-t from-begin to-end"
+                    >
+                      <Image
+                        src={item.imageUrl}
+                        width={95}
+                        height={95}
+                        alt=""
+                        className="object-cover"
+                      />
+                    </div>
+                    <div className="relative flex flex-col gap-2">
+                      <span className="font-roboto text-lg font-normal text-text">
+                        {item.name}
+                      </span>
+                      <strong className="font-roboto text-lg font-bold text-title">
+                        {new Intl.NumberFormat('pt-BR', {
+                          style: 'currency',
+                          currency: 'BRL',
+                        }).format(Number(item.price) / 100)}
+                      </strong>
+                      <RemoveCartButton productId={item.id} />
+                    </div>
+                  </div>
+                </>
+              )
+            })}
           </div>
           <footer className="absolute bottom-12 left-12 right-12">
             <div className="flex justify-between">
@@ -40,7 +103,9 @@ export function Cart() {
                 Quantidade
               </span>
               <span className="font-roboto text-lg font-normal text-text">
-                3 itens
+                {quantityItems < 2
+                  ? `${quantityItems} item`
+                  : `${quantityItems} itens`}
               </span>
             </div>
             <div className="flex justify-between">
@@ -48,10 +113,17 @@ export function Cart() {
                 Valor Total
               </strong>
               <strong className="font-roboto text-2xl font-bold text-title">
-                R$ 270,00
+                {new Intl.NumberFormat('pt-BR', {
+                  style: 'currency',
+                  currency: 'BRL',
+                }).format(Number(totalPrice) / 100)}
               </strong>
             </div>
-            <button className="mt-14 w-full items-center rounded-lg bg-principal p-5 font-roboto text-xl font-bold text-white hover:bg-light">
+            <button
+              type="button"
+              className="mt-14 w-full items-center rounded-lg bg-principal p-5 font-roboto text-xl font-bold text-white hover:bg-light"
+              onClick={handleBuyProduct}
+            >
               Finalizar compra
             </button>
           </footer>
