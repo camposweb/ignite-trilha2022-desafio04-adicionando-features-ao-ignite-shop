@@ -1,3 +1,4 @@
+import { AddCartButton } from '@/app/components/AddCartButton'
 import { env } from '@/env'
 import { Product } from '@/types/product'
 import { Metadata } from 'next'
@@ -50,17 +51,15 @@ export default async function ProductPage({ params }: ProductProps) {
           {product.name}
         </h1>
         <span className="pt-4 font-roboto text-3xl text-light">
-          {product.price}
+          {new Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL',
+          }).format(Number(product.price) / 100)}
         </span>
         <p className="mb-10 pt-10 font-roboto text-lg font-normal text-text lg:mb-0">
           {product.description}
         </p>
-        <button
-          type="button"
-          className="mt-auto items-center rounded-lg bg-principal p-5 font-roboto text-xl font-bold text-white hover:bg-light"
-        >
-          Colocar na sacola
-        </button>
+        <AddCartButton product={product} />
       </div>
     </div>
   )
