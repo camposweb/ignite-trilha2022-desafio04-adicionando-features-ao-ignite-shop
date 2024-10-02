@@ -22,10 +22,7 @@ export async function GET(req: NextRequest, { params }: DataParams) {
     id: (await product).id,
     name: (await product).name,
     imageUrl: (await product).images[0],
-    price: new Intl.NumberFormat('pt-BR', {
-      style: 'currency',
-      currency: 'BRL',
-    }).format(Number(price.unit_amount) / 100),
+    price: price.unit_amount,
     description: (await product).description,
     defaultPriceId: price.id,
   })
