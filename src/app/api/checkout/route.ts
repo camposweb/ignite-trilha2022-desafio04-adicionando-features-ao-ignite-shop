@@ -1,10 +1,17 @@
 import { env } from '@/env'
 import { stripe } from '@/lib/stripe'
+import { Product } from '@/types/product'
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function POST(req: NextRequest) {
-  const response = await req.json()
-  const priceId = response.priceId as string
+  const { cartItems } = await req.json()
+  const products: Product[] = Object.values(cartItems) as Product[]
+  const items = products.map((item) => {
+    return {
+      price: item.defaultPriceId,
+      quantity: 1,
+    }
+  })
 
   const successUrl = `${env.NEXT_PUBLIC_URL}/purchase?session_id={CHECKOUT_SESSION_ID}`
   const cancelUrl = `${env.NEXT_PUBLIC_URL}`
@@ -13,7 +20,7 @@ export async function POST(req: NextRequest) {
     success_url: successUrl,
     cancel_url: cancelUrl,
     mode: 'payment',
-    line_items: [{ price: priceId, quantity: 1 }],
+    line_items: items,
   })
 
   return NextResponse.json(
