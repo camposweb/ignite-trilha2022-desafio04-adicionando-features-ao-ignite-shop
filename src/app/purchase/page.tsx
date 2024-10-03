@@ -1,60 +1,74 @@
-import { Metadata } from 'next'
+'use client'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ItemPurchase } from '../components/ItemPurchase'
 import { stripe } from '@/lib/stripe'
 import Stripe from 'stripe'
+import { useSearchParams, useRouter } from 'next/navigation'
+import { useCallback, useEffect, useState } from 'react'
+import { NextResponse } from 'next/server'
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function getSession({ query }: any) {
-  if (!query.session_id) {
-    return {
-      redirect: {
-        destination: '/',
-        permanent: false,
-      },
-    }
-  }
-
-  const sessionId = String(query.session_id)
-
-  const session = await stripe.checkout.sessions.retrieve(sessionId, {
-    expand: ['line_items', 'line_items.data.price.product'],
-  })
-
-  const customerName = session.customer_details?.name
-  const product = session.line_items?.data[0].price?.product as Stripe.Product
-
-  return {
-    props: {
-      customerName,
-      product: {
-        name: product.name,
-        imageUrl: product.images[0],
-      },
-    },
+interface GetSessionProps {
+  params: {
+    session_id: string
   }
 }
 
-export const metadata: Metadata = {
-  title: 'Purchase',
-}
-
-interface PurchaseProps {
-  customerName: string
+interface DataProps {
+  customerName: string | undefined
   product: {
     name: string
     imageUrl: string
-  }
+  }[]
 }
 
-export default async function Purchase({
-  customerName,
-  product,
-}: PurchaseProps) {
-  await getSession(
-    'cs_test_a161KYiEcNj0y2gRz4grDOn7FPWVZtlKEtEJ69z8Oo1kCXNzARFBvbpfIY',
+export default function Purchase() {
+  const router = useRouter()
+
+  const searchParams = useSearchParams()
+  const search = searchParams.get('session_id')
+
+  const [purchase, setPurchase] = useState<DataProps>()
+
+  const getPurchase = useCallback(
+    async ({ params }: GetSessionProps) => {
+      if (!params.session_id) {
+        router.push('/')
+      }
+      const sessionId = String(params.session_id)
+
+      const session = await stripe.checkout.sessions.retrieve(sessionId, {
+        expand: ['line_items', 'line_items.data.price.product'],
+      })
+
+      const customerName = session.customer_details?.name
+      const products = session.line_items?.data.map((item) => {
+        return item.price?.product
+      }) as Stripe.Product[]
+
+      const buy = products.map((item) => {
+        return {
+          name: item.name,
+          imageUrl: item.images[0],
+        }
+      })
+
+      return NextResponse.json({
+        customerName,
+        product: buy,
+      })
+    },
+    [router],
   )
+
+  useEffect(() => {
+    getPurchase({
+      params: {
+        session_id: String(search),
+      },
+    }).then((res) => res.json().then((data: DataProps) => setPurchase(data)))
+  }, [search, getPurchase])
+
   return (
     <div className="flex w-full flex-col items-center justify-center px-3 text-center">
       <Image
@@ -65,16 +79,27 @@ export default async function Purchase({
         className="mt-16"
       />
       <section className="mt-28 flex flex-row [&>div+div]:-ml-12">
-        <ItemPurchase>
-          <Image src={product.imageUrl} width={130} height={133} alt="" />
-        </ItemPurchase>
+        {purchase?.product.map((item) => {
+          return (
+            <ItemPurchase key={item.name.toLowerCase()}>
+              <Image src={item.imageUrl} width={130} height={133} alt="" />
+            </ItemPurchase>
+          )
+        })}
       </section>
       <h1 className="mt-12 font-roboto text-3xl font-bold text-title">
         Compra efetuada!
       </h1>
       <p className="mt-6 font-roboto text-xl font-normal text-title">
-        Uhuul {customerName}, sua compra de 1 camiseta já está a caminho da sua
-        casa.
+        Uhuul{' '}
+        <strong className="font-roboto text-2xl font-bold">
+          {purchase?.customerName}
+        </strong>
+        , sua compra de {purchase?.product.length}{' '}
+        {purchase?.product && purchase.product.length < 2
+          ? 'camiseta'
+          : 'camisetas'}{' '}
+        já está a caminho da sua casa.
       </p>
       <Link
         href={'/'}
