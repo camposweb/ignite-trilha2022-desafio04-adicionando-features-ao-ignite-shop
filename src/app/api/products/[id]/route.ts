@@ -12,18 +12,18 @@ interface DataParams {
 export async function GET(req: NextRequest, { params }: DataParams) {
   const id = z.string().parse(params.id)
 
-  const product = stripe.products.retrieve(id, {
+  const product = await stripe.products.retrieve(id, {
     expand: ['default_price'],
   })
 
-  const price = (await product).default_price as Stripe.Price
+  const price = product.default_price as Stripe.Price
 
   return NextResponse.json({
-    id: (await product).id,
-    name: (await product).name,
-    imageUrl: (await product).images[0],
+    id: product.id,
+    name: product.name,
+    imageUrl: product.images[0],
     price: price.unit_amount,
-    description: (await product).description,
+    description: product.description,
     defaultPriceId: price.id,
   })
 }
