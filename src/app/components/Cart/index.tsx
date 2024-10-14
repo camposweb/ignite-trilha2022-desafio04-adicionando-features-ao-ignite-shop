@@ -64,6 +64,13 @@ export function Cart() {
             Sacola de compras
           </h1>
           <div className="mt-8 flex h-[400px] w-full flex-col gap-6 overflow-auto md:h-full lg:h-[250px] 2xl:h-[520px]">
+            {cartItems.length < 1 ? (
+              <span className="font-roboto text-base font-normal text-text">
+                A sacola de compras está vazia
+              </span>
+            ) : (
+              ''
+            )}
             {cartItems?.map((item) => {
               return (
                 <>
@@ -97,36 +104,40 @@ export function Cart() {
               )
             })}
           </div>
-          <footer className="absolute bottom-12 left-12 right-12">
-            <div className="flex justify-between">
-              <span className="font-roboto text-base font-normal text-text">
-                Quantidade
-              </span>
-              <span className="font-roboto text-lg font-normal text-text">
-                {quantityItems < 2
-                  ? `${quantityItems} item`
-                  : `${quantityItems} itens`}
-              </span>
-            </div>
-            <div className="flex justify-between">
-              <strong className="font-roboto text-lg font-bold text-title">
-                Valor Total
-              </strong>
-              <strong className="font-roboto text-2xl font-bold text-title">
-                {new Intl.NumberFormat('pt-BR', {
-                  style: 'currency',
-                  currency: 'BRL',
-                }).format(Number(totalPrice) / 100)}
-              </strong>
-            </div>
-            <button
-              type="button"
-              className="mt-14 w-full items-center rounded-lg bg-principal p-5 font-roboto text-xl font-bold text-white hover:bg-light"
-              onClick={handleBuyProduct}
-            >
-              Finalizar compra
-            </button>
-          </footer>
+          {cartItems.length > 0 ? (
+            <footer className="absolute bottom-12 left-12 right-12">
+              <div className="flex justify-between">
+                <span className="font-roboto text-base font-normal text-text">
+                  Quantidade
+                </span>
+                <span className="font-roboto text-lg font-normal text-text">
+                  {quantityItems < 2
+                    ? `${quantityItems} item`
+                    : `${quantityItems} itens`}
+                </span>
+              </div>
+              <div className="flex justify-between">
+                <strong className="font-roboto text-lg font-bold text-title">
+                  Valor Total
+                </strong>
+                <strong className="font-roboto text-2xl font-bold text-title">
+                  {new Intl.NumberFormat('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL',
+                  }).format(Number(totalPrice) / 100)}
+                </strong>
+              </div>
+              <button
+                type="button"
+                className="mt-14 w-full items-center rounded-lg bg-principal p-5 font-roboto text-xl font-bold text-white hover:bg-light"
+                onClick={handleBuyProduct}
+              >
+                Finalizar compra
+              </button>
+            </footer>
+          ) : (
+            ''
+          )}
         </div>
       </Collapsible.Content>
     </Collapsible.Root>
