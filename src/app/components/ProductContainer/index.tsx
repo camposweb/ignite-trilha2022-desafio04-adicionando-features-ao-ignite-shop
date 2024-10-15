@@ -2,16 +2,27 @@
 
 import { useKeenSlider } from 'keen-slider/react'
 import 'keen-slider/keen-slider.min.css'
-import { ReactNode } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
+import { ButtonSlide } from '../ButtonSlide'
 
 interface ProductContainerProps {
   children: ReactNode
 }
 
 export function ProductContainer({ children }: ProductContainerProps) {
-  const [sliderRef] = useKeenSlider<HTMLDivElement>({
+  const [currentSlide, setCurrentSlide] = useState(0)
+  const [loaded, setLoaded] = useState(false)
+  const [screenResolution, setScreenResolution] = useState(3)
+  const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>({
+    initial: 0,
+    slideChanged(slider) {
+      setCurrentSlide(slider.track.details.rel)
+    },
+    created() {
+      setLoaded(true)
+    },
     slides: {
-      perView: 2,
+      perView: 3,
       spacing: 48,
     },
     breakpoints: {
@@ -24,9 +35,42 @@ export function ProductContainer({ children }: ProductContainerProps) {
     },
   })
 
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      if (window.screen.width < 768) {
+        setScreenResolution(1)
+      } else {
+        setScreenResolution(3)
+      }
+    }
+  }, [])
+
   return (
-    <div ref={sliderRef} className="keen-slider pl-11">
-      {children}
-    </div>
+    <>
+      <div className="relative">
+        <div ref={sliderRef} className="keen-slider">
+          {children}
+        </div>
+        {loaded && instanceRef.current && (
+          <>
+            {currentSlide === 0 ? (
+              ''
+            ) : (
+              <ButtonSlide
+                arrowLeft
+                onClick={() => instanceRef.current?.prev()}
+              />
+            )}
+            {currentSlide ===
+            instanceRef.current.track.details.slides.length -
+              screenResolution ? (
+              ''
+            ) : (
+              <ButtonSlide onClick={() => instanceRef.current?.next()} />
+            )}
+          </>
+        )}
+      </div>
+    </>
   )
 }
