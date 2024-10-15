@@ -1,5 +1,20 @@
 import { Product } from '@/types/product'
-import { configureStore, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import {
+  combineReducers,
+  configureStore,
+  createSlice,
+  PayloadAction,
+} from '@reduxjs/toolkit'
+import {
+  FLUSH,
+  PAUSE,
+  PERSIST,
+  persistReducer,
+  PURGE,
+  REGISTER,
+  REHYDRATE,
+} from 'redux-persist'
+import storage from 'redux-persist/lib/storage'
 
 interface CartItem {
   cartItems: Product[]
@@ -54,11 +69,27 @@ const cartSlice = createSlice({
   },
 })
 
+const persistConfig = {
+  key: 'igniteShop:CartItems',
+  storage,
+  timeout: 1000,
+}
+
+const persistedReducer = persistReducer(persistConfig, cartSlice.reducer)
+
+const rootReducer = combineReducers({
+  cartWidget: persistedReducer,
+})
+
 export const cartStore = () => {
   return configureStore({
-    reducer: {
-      cartWidget: cartSlice.reducer,
-    },
+    reducer: rootReducer,
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware({
+        serializableCheck: {
+          ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+        },
+      }),
   })
 }
 

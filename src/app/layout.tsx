@@ -1,7 +1,12 @@
 import type { Metadata } from 'next'
 import { Roboto } from 'next/font/google'
 import './globals.css'
-import StoreProvider from './storeProvider'
+// import StoreProvider from './storeProvider'
+import dynamic from 'next/dynamic'
+
+const StoreProvider = dynamic(() => import('./storeProvider'), {
+  ssr: false,
+})
 
 const roboto = Roboto({
   subsets: ['latin'],
