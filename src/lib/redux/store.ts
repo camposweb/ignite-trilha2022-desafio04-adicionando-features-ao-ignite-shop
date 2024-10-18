@@ -66,6 +66,11 @@ const cartSlice = createSlice({
       state.quantityItems = newQuantityItems
       state.totalPrice = newTotalPrice || 0
     },
+    reset: (state) => {
+      state.cartItems = initialState.cartItems
+      state.quantityItems = initialState.quantityItems
+      state.totalPrice = initialState.totalPrice
+    },
   },
 })
 
@@ -93,7 +98,7 @@ export const cartStore = () => {
   })
 }
 
-export const { addItemCart, removeItemCart } = cartSlice.actions
+export const { addItemCart, removeItemCart, reset } = cartSlice.actions
 
 export type AppStore = ReturnType<typeof cartStore>
 export type RootState = ReturnType<AppStore['getState']>

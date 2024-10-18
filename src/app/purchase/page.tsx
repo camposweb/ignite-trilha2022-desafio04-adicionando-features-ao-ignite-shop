@@ -7,6 +7,8 @@ import Stripe from 'stripe'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { useCallback, useEffect, useState } from 'react'
 import { NextResponse } from 'next/server'
+import { reset } from '@/lib/redux/store'
+import { useAppDispatch } from '@/lib/redux/hooks'
 
 interface GetSessionProps {
   params: {
@@ -29,6 +31,8 @@ export default function Purchase() {
   const search = searchParams.get('session_id')
 
   const [purchase, setPurchase] = useState<DataProps>()
+
+  const dispatch = useAppDispatch()
 
   const getPurchase = useCallback(
     async ({ params }: GetSessionProps) => {
@@ -53,12 +57,14 @@ export default function Purchase() {
         }
       })
 
+      dispatch(reset())
+
       return NextResponse.json({
         customerName,
         product: buy,
       })
     },
-    [router],
+    [router, dispatch],
   )
 
   useEffect(() => {
