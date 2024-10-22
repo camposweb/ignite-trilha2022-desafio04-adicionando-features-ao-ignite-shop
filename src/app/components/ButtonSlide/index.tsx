@@ -14,13 +14,13 @@ export function ButtonSlide({ arrowLeft, ...props }: ButtonSlideProps) {
     <>
       {arrowLeft ? (
         <div className="absolute top-0 flex h-[656px] w-[136px] items-center bg-gradient-to-r from-background/75 from-0%">
-          <button className="flex h-12 w-12" {...props}>
+          <button type="button" className="flex h-12 w-12" {...props}>
             <CaretLeft size={48} className="text-text" />
           </button>
         </div>
       ) : (
         <div className="absolute right-0 top-0 flex h-[656px] w-[136px] items-center justify-end bg-gradient-to-l from-background/75 from-0%">
-          <button className="flex h-12 w-12" {...props}>
+          <button type="button" className="flex h-12 w-12" {...props}>
             <CaretRight size={48} className="text-text" />
           </button>
         </div>

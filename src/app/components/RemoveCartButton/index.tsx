@@ -19,6 +19,7 @@ export function RemoveCartButton({ productId }: RemoveCartButtonProps) {
       type="button"
       className="absolute bottom-0 flex font-roboto text-base font-bold text-principal"
       onClick={handleRemoveProductToCart}
+      data-cy="button-item-cart"
     >
       Remover
     </button>

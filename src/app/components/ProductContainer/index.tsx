@@ -59,6 +59,7 @@ export function ProductContainer({ children }: ProductContainerProps) {
               <ButtonSlide
                 arrowLeft
                 onClick={() => instanceRef.current?.prev()}
+                data-cy="buttonLeft"
               />
             )}
             {currentSlide ===
@@ -66,7 +67,10 @@ export function ProductContainer({ children }: ProductContainerProps) {
               screenResolution ? (
               ''
             ) : (
-              <ButtonSlide onClick={() => instanceRef.current?.next()} />
+              <ButtonSlide
+                onClick={() => instanceRef.current?.next()}
+                data-cy="buttonRight"
+              />
             )}
           </>
         )}

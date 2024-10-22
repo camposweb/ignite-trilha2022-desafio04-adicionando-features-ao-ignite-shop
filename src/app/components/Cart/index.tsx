@@ -24,6 +24,7 @@ export function Cart() {
         },
         body: JSON.stringify({ cartItems }),
       })
+
       const checkoutUrl = response.json()
       checkoutUrl.then((res) => {
         window.location.href = res.checkoutUrl
@@ -32,17 +33,24 @@ export function Cart() {
       alert(`Falha ao redirecionar ao checkout \n${err}`)
     }
   }
+
   return (
     <Collapsible.Root>
       <div className="relative z-20 flex">
         <Collapsible.Trigger asChild className="">
-          <button className="items-center rounded-md bg-elements p-2">
+          <button
+            className="items-center rounded-md bg-elements p-2"
+            data-cy="button-cart"
+          >
             <Handbag className="h-6 w-6 text-icon" />
             {quantityItems < 1 ? (
               ''
             ) : (
               <div className="absolute -right-3 top-[-8px] flex h-6 w-6 items-center justify-center overflow-visible rounded-full border-2 border-background bg-principal">
-                <span className="text-sm font-bold text-white">
+                <span
+                  className="text-sm font-bold text-white"
+                  data-cy="span-quantity-items"
+                >
                   {quantityItems}
                 </span>
               </div>
@@ -53,12 +61,18 @@ export function Cart() {
       <Collapsible.Content
         forceMount
         className="fixed right-0 top-0 z-20 flex h-screen w-screen flex-col overflow-auto bg-elements transition duration-200 ease-in-out data-[state=closed]:hidden lg:w-[480px] lg:translate-x-0"
+        data-cy="content-cart"
       >
-        <Collapsible.Trigger asChild>
-          <button className="flex justify-end pr-8 pt-8 data-[state=closed]:hidden">
-            <X className="h-6 w-6 text-icon" />
-          </button>
-        </Collapsible.Trigger>
+        <div className="flex justify-end">
+          <Collapsible.Trigger asChild>
+            <button
+              className="mr-6 mt-8 flex h-6 w-6 data-[state=closed]:hidden"
+              data-cy="button-close-cart"
+            >
+              <X className="h-6 w-6 text-icon" />
+            </button>
+          </Collapsible.Trigger>
+        </div>
         <div className="flex w-full flex-col px-12">
           <h1 className="font-roboto text-xl font-bold text-title">
             Sacola de compras
@@ -131,6 +145,7 @@ export function Cart() {
                 type="button"
                 className="mt-14 w-full items-center rounded-lg bg-principal p-5 font-roboto text-xl font-bold text-white hover:bg-light"
                 onClick={handleBuyProduct}
+                data-cy="button-checkout"
               >
                 Finalizar compra
               </button>
