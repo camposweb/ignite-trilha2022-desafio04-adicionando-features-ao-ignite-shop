@@ -3,7 +3,7 @@ import { z } from 'zod'
 
 export const env = createEnv({
   server: {
-    APP_VERCEL_URL: z.string().url(),
+    APP_VERCEL_URL: z.string(),
   },
   clientPrefix: 'NEXT_',
   client: {
