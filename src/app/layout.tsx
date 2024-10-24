@@ -3,6 +3,7 @@ import { Roboto } from 'next/font/google'
 import './globals.css'
 // import StoreProvider from './storeProvider'
 import dynamic from 'next/dynamic'
+import { Analytics } from '@vercel/analytics/react'
 
 const StoreProvider = dynamic(() => import('./storeProvider'), {
   ssr: false,
@@ -31,6 +32,7 @@ export default function RootLayout({
     <html lang="pt-BR">
       <body className={`${roboto.variable} bg-background antialiased`}>
         <StoreProvider>{children}</StoreProvider>
+        <Analytics />
       </body>
     </html>
   )
