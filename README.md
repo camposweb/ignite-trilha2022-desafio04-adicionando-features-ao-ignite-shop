@@ -1,36 +1,78 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+![cover](public/cover.png)
 
-## Getting Started
+# Ignite Shop 2.0
 
-First, run the development server:
+Esta aplicação foi desenvolvida a partir do desafio do treinamento de ReactJS da Rocketseat, 
+o desafio proposto foi implementar um carrinho de compras no projeto desenvolvido em um dos capítulos do treinamento, 
+porém decidi refatorar todo projeto com as features mais recentes do Next.JS 14 com App Router, ou seja, 
+uma arquitetura totalmente diferente, mais atual e adequada para projetos next.js para os dias atuais, foi um grande desafio.
+No desenvolvimento do projeto utilizei o [TailwindCSS](https://tailwindcss.com/) para estilização, no qual 
+se tornou a biblioteca de estilização padrão para projetos next.js, 
+[Phosphor](https://phosphoricons.com/) para ícones, [Radix UI](https://www.radix-ui.com/primitives) para desenvolver o menu de uma forma mais ágil, [Redux Toolkit](https://redux-toolkit.js.org/) para o gerenciamento de estado, 
+[Keen-slider](https://keen-slider.io/), uma biblioteca que ajuda na criação de slides, 
+[Stripe](https://stripe.com/), como integração para meios de pagamentos, [T3 Env](https://env.t3.gg/) com o objetivo de tipagem de variáveis de ambiente, [tailwind-merge](https://github.com/dcastil/tailwind-merge), biblioteca que a auxilia na criação de componentes.
+Algo que venho utilizando bastante é a biblioteca da rocketseat [eslint-config-rocketseat](https://github.com/Rocketseat/eslint-config-rocketseat) como uma boa configuração ESlint e formatação com Prettier.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+#### Plus +
+
+- Responsividade (Mobile First)
+- Testes end-to-end com [Cypress](https://www.cypress.io/) (Os testes não estão 100%, pois não consegui realizar o teste do checkout com a confirmação de envio dos items)
+- Persistência de dados com [Redux Persist](https://github.com/rt2zz/redux-persist) para armazenar os items no carrinho de compras mesmo quando atualiza a página ou fecha o navegador.
+
+
+### Funcionalidades:
+
+- Adicionar item ao carrinho.
+
+- Remover item do carrinho.
+
+- Slide de produtos
+
+- Checkout com a confirmação de envio
+
+- Página de confirmação de envio
+
+
+## Tecnologias Utilizadas
+
+![Next.js Badge](https://img.shields.io/badge/Next.js-000?logo=nextdotjs&logoColor=fff&style=for-the-badge)
+![Tailwind CSS Badge](https://img.shields.io/badge/Tailwind%20CSS-06B6D4?logo=tailwindcss&logoColor=fff&style=for-the-badge)
+![Redux Badge](https://img.shields.io/badge/Redux-764ABC?logo=redux&logoColor=fff&style=for-the-badge)
+![Cypress Badge](https://img.shields.io/badge/Cypress-69D3A7?logo=cypress&logoColor=fff&style=for-the-badge)
+![Stripe Badge](https://img.shields.io/badge/Stripe-008CDD?logo=stripe&logoColor=fff&style=for-the-badge)
+
+
+## Inicializar a aplicação:
+
+
+Caso tenha interesse em clonar o repositório favor seguir as seguites instruções:
+
+Criar um arquivo .env.local com o seguinte código no qual você pode inserir seu próprio perfil no github e respositório selecionado da sua escolha
+```javascript
+
+# Caminho da url raíz da aplicação
+NEXT_PUBLIC_URL
+
+# Caminho da url raíz da aplicação
+APP_URL
+
+# sua public key no stripe
+NEXT_PUBLIC_STRIPE_PUBLIC_KEY
+
+# sua secret key no stripe
+NEXT_PUBLIC_STRIPE_SECRET_KEY
+
+
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Para inicializar a aplicação utilizar os comandos
+```javascript
+npm install
+npm run dev
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+	or
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+yarn install
+yarn dev
+```
