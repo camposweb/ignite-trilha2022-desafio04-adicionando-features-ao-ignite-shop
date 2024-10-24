@@ -8,7 +8,7 @@ import 'keen-slider/keen-slider.min.css'
 import { ProductContainer } from '@/app/components/ProductContainer'
 
 async function getProducts(): Promise<Product[]> {
-  const response = await fetch(`${env.NEXT_PUBLIC_URL}/api/products`, {
+  const response = await fetch(`${env.NEXT_PUBLIC_VERCEL_URL}/api/products`, {
     next: {
       revalidate: 60 * 60,
     },
