@@ -17,13 +17,16 @@ export function Cart() {
 
   async function handleBuyProduct() {
     try {
-      const response = await fetch(`${env.NEXT_PUBLIC_URL}/api/checkout`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+      const response = await fetch(
+        `${env.NEXT_PUBLIC_VERCEL_URL}/api/checkout`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ cartItems }),
         },
-        body: JSON.stringify({ cartItems }),
-      })
+      )
 
       const checkoutUrl = response.json()
       checkoutUrl.then((res) => {
