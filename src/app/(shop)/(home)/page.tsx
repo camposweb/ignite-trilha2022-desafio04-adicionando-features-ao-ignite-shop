@@ -26,6 +26,9 @@ export const metadata: Metadata = {
 }
 
 export default async function Home() {
+  if (!env.NEXT_PUBLIC_VERCEL_URL_APP) {
+    return null
+  }
   const products = await getProducts()
 
   return (
