@@ -4,7 +4,6 @@ import * as Collapsible from '@radix-ui/react-collapsible'
 import { useAppSelector } from '@/lib/redux/hooks'
 import Image from 'next/image'
 import { RemoveCartButton } from '../RemoveCartButton'
-import { env } from '@/env'
 
 export function Cart() {
   const quantityItems = useAppSelector(
@@ -18,7 +17,7 @@ export function Cart() {
   async function handleBuyProduct() {
     try {
       const response = await fetch(
-        `${env.NEXT_PUBLIC_VERCEL_URL_APP}/api/checkout`,
+        `${process.env.NEXT_PUBLIC_VERCEL_URL_APP}/api/checkout`,
         {
           method: 'POST',
           headers: {

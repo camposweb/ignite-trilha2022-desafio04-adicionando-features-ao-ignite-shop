@@ -1,5 +1,3 @@
-'use server'
-import { env } from '@/env'
 import { stripe } from '@/lib/stripe'
 import { Product } from '@/types/product'
 import { NextRequest, NextResponse } from 'next/server'
@@ -14,8 +12,8 @@ export async function POST(req: NextRequest) {
     }
   })
 
-  const successUrl = `${env.NEXT_PUBLIC_VERCEL_URL_APP}/purchase?session_id={CHECKOUT_SESSION_ID}`
-  const cancelUrl = `${env.NEXT_PUBLIC_VERCEL_URL_APP}`
+  const successUrl = `${process.env.NEXT_PUBLIC_VERCEL_URL_APP}/purchase?session_id={CHECKOUT_SESSION_ID}`
+  const cancelUrl = `${process.env.NEXT_PUBLIC_VERCEL_URL_APP}`
 
   const checkoutSession = await stripe.checkout.sessions.create({
     success_url: successUrl,

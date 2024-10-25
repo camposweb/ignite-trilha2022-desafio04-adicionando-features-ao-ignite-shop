@@ -1,5 +1,4 @@
 import { AddCartButton } from '@/app/components/AddCartButton'
-import { env } from '@/env'
 import { Product } from '@/types/product'
 import { Metadata } from 'next'
 import Image from 'next/image'
@@ -12,7 +11,7 @@ interface ProductProps {
 
 async function getProduct(id: string): Promise<Product> {
   const response = await fetch(
-    `${env.NEXT_PUBLIC_VERCEL_URL_APP}/api/products/${id}`,
+    `${process.env.NEXT_PUBLIC_VERCEL_URL_APP}/api/products/${id}`,
     {
       next: {
         revalidate: 60 * 60,

@@ -1,4 +1,3 @@
-import { env } from '@/env'
 import { Product } from '@/types/product'
 import { Handbag } from '@phosphor-icons/react/dist/ssr'
 import { Metadata } from 'next'
@@ -9,7 +8,7 @@ import { ProductContainer } from '@/app/components/ProductContainer'
 
 async function getProducts(): Promise<Product[]> {
   const response = await fetch(
-    `${env.NEXT_PUBLIC_VERCEL_URL_APP}/api/products`,
+    `${process.env.NEXT_PUBLIC_VERCEL_URL_APP}/api/products`,
     {
       next: {
         revalidate: 60 * 60,
@@ -26,7 +25,7 @@ export const metadata: Metadata = {
 }
 
 export default async function Home() {
-  if (!env.NEXT_PUBLIC_VERCEL_URL_APP) {
+  if (!process.env.NEXT_PUBLIC_VERCEL_URL_APP) {
     return null
   }
   const products = await getProducts()
@@ -36,7 +35,7 @@ export default async function Home() {
       {products.map((product) => {
         return (
           <Link
-            href={`/product/${product.id}`}
+            href={`${process.env.NEXT_PUBLIC_VERCEL_URL_APP}/product/${product.id}`}
             key={product.id}
             data-cy="link-product"
           >
