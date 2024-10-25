@@ -12,7 +12,7 @@ interface ProductProps {
 
 async function getProduct(id: string): Promise<Product> {
   const response = await fetch(
-    `${env.NEXT_PUBLIC_VERCEL_URL}/api/products/${id}`,
+    `https://${env.NEXT_PUBLIC_VERCEL_URL}/api/products/${id}`,
     {
       next: {
         revalidate: 60 * 60,
