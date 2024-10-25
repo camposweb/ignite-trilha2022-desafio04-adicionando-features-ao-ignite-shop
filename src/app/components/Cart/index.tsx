@@ -18,7 +18,7 @@ export function Cart() {
   async function handleBuyProduct() {
     try {
       const response = await fetch(
-        `${env.NEXT_PUBLIC_VERCEL_URL}/api/checkout`,
+        `${env.NEXT_PUBLIC_VERCEL_ENV_APP_URL}/api/checkout`,
         {
           method: 'POST',
           headers: {
