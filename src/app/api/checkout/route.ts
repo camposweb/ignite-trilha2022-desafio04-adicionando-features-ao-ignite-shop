@@ -1,3 +1,4 @@
+'use server'
 import { env } from '@/env'
 import { stripe } from '@/lib/stripe'
 import { Product } from '@/types/product'
