@@ -35,7 +35,7 @@ export default async function Home() {
       {products.map((product) => {
         return (
           <Link
-            href={`${process.env.NEXT_PUBLIC_VERCEL_URL_APP}/product/${product.id}`}
+            href={`/product/${product.id}`}
             key={product.id}
             data-cy="link-product"
           >
