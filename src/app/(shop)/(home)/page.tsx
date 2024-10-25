@@ -9,7 +9,7 @@ import { ProductContainer } from '@/app/components/ProductContainer'
 
 async function getProducts(): Promise<Product[]> {
   const response = await fetch(
-    `${env.NEXT_PUBLIC_VERCEL_ENV_APP_URL}/api/products`,
+    `${env.NEXT_PUBLIC_VERCEL_URL_APP}/api/products`,
     {
       next: {
         revalidate: 60 * 60,

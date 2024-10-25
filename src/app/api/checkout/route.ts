@@ -14,8 +14,8 @@ export async function POST(req: NextRequest) {
     }
   })
 
-  const successUrl = `${env.NEXT_PUBLIC_VERCEL_ENV_APP_URL}/purchase?session_id={CHECKOUT_SESSION_ID}`
-  const cancelUrl = `${env.NEXT_PUBLIC_VERCEL_ENV_APP_URL}`
+  const successUrl = `${env.NEXT_PUBLIC_VERCEL_URL_APP}/purchase?session_id={CHECKOUT_SESSION_ID}`
+  const cancelUrl = `${env.NEXT_PUBLIC_VERCEL_URL_APP}`
 
   const checkoutSession = await stripe.checkout.sessions.create({
     success_url: successUrl,
