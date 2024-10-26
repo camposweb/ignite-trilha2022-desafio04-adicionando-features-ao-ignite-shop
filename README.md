@@ -10,7 +10,7 @@ No desenvolvimento do projeto utilizei o [TailwindCSS](https://tailwindcss.com/)
 se tornou a biblioteca de estilização padrão para projetos next.js, 
 [Phosphor](https://phosphoricons.com/) para ícones, [Radix UI](https://www.radix-ui.com/primitives) para desenvolver o menu de uma forma mais ágil, [Redux Toolkit](https://redux-toolkit.js.org/) para o gerenciamento de estado, 
 [Keen-slider](https://keen-slider.io/), uma biblioteca que ajuda na criação de slides, 
-[Stripe](https://stripe.com/), como integração para meios de pagamentos, [T3 Env](https://env.t3.gg/) com o objetivo de tipagem de variáveis de ambiente, [tailwind-merge](https://github.com/dcastil/tailwind-merge), biblioteca que a auxilia na criação de componentes.
+[Stripe](https://stripe.com/), como integração para meios de pagamentos, [tailwind-merge](https://github.com/dcastil/tailwind-merge), biblioteca que a auxilia na criação de componentes.
 Algo que venho utilizando bastante é a biblioteca da rocketseat [eslint-config-rocketseat](https://github.com/Rocketseat/eslint-config-rocketseat) como uma boa configuração ESlint e formatação com Prettier.
 
 
