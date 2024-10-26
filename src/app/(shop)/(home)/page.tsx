@@ -42,7 +42,7 @@ export default async function Home() {
             <div className="keen-slider__slide group relative flex h-[656px] min-w-[696px] cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-gradient-to-t from-begin to-end">
               <Image
                 src={product.imageUrl}
-                alt=""
+                alt={product.name}
                 width={401}
                 height={401}
                 className="object-cover"

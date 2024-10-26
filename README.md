@@ -52,17 +52,10 @@ Criar um arquivo .env.local com o seguinte código no qual você pode inserir se
 ```javascript
 
 # Caminho da url raíz da aplicação
-NEXT_PUBLIC_URL
-
-# Caminho da url raíz da aplicação
-APP_URL
-
-# sua public key no stripe
-NEXT_PUBLIC_STRIPE_PUBLIC_KEY
+NEXT_PUBLIC_VERCEL_URL_APP
 
 # sua secret key no stripe
-NEXT_PUBLIC_STRIPE_SECRET_KEY
-
+NEXT_PUBLIC_VERCEL_ENV_STRIPE_SECRET_KEY
 
 ```
 
@@ -76,3 +69,6 @@ npm run dev
 yarn install
 yarn dev
 ```
+
+## A aplicação está hospedada na Vercel
+[https://ignite-trilha2022-desafio04-adicionando-features-ao-ignite-shop.vercel.app/](https://ignite-trilha2022-desafio04-adicionando-features-ao-ignite-shop.vercel.app/)
