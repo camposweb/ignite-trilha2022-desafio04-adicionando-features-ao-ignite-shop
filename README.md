@@ -42,6 +42,27 @@ Algo que venho utilizando bastante é a biblioteca da rocketseat [eslint-config-
 ![Cypress Badge](https://img.shields.io/badge/Cypress-69D3A7?logo=cypress&logoColor=fff&style=for-the-badge)
 ![Stripe Badge](https://img.shields.io/badge/Stripe-008CDD?logo=stripe&logoColor=fff&style=for-the-badge)
 
+## Fluxo da aplicação
+
+1. Selecione o um produto.
+2. Adicione no carrinho (A regra é que só pode adicionar 1 unidade de cada produto).
+3. Clicar no botão do carrinho no canto superior direito da tela.
+4. Clicar no botão finalizar compra.
+5. Redirecionamento para página de pagamento (Integração com a API Stripe).
+6. Complete os campos dos seguintes dados:
+```
+E-Mail: Seu e-mail
+
+// Dados do cartão no modo teste
+Dados do cartão: 4242 4242 4242 4242
+Data de expiração: 12/34
+CVC: 123
+
+Nome do titular do cartão: Seu nome e sobrenome
+```
+7. Depois de preencher os campos clicar em pagar.
+8. Redirecionamento para a página de confirmação de envio dos produtos. 
+
 
 ## Inicializar a aplicação:
 
